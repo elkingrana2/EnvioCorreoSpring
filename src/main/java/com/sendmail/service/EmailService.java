@@ -17,18 +17,16 @@ public class EmailService {
     this.javaMailSender = javaMailSender;
   }
 
-  /*
-   * public void enviarCorreo(String email, String placa, String mensaje, Long
-   * idParqueadero) throws MessagingException {
-   * 
-   * MimeMessage mensajeFinal = javaMailSender.createMimeMessage();
-   * MimeMessageHelper helper = new MimeMessageHelper(mensajeFinal, true);
-   * 
-   * helper.setTo(email);
-   * helper.setSubject(placa);
-   * helper.setText(mensaje, true);
-   * 
-   * javaMailSender.send(mensajeFinal);
-   * }
-   */
+  public void enviarCorreo(String email, String placa, String mensaje, Long idParqueadero) throws MessagingException {
+
+    MimeMessage mensajeFinal = javaMailSender.createMimeMessage();
+    MimeMessageHelper helper = new MimeMessageHelper(mensajeFinal, true);
+
+    helper.setTo(email);
+    helper.setSubject(placa);
+    helper.setText(mensaje, true);
+
+    javaMailSender.send(mensajeFinal);
+  }
+
 }

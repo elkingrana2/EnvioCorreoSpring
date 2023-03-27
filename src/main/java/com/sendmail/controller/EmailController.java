@@ -6,6 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.*;
+
+import com.sendmail.dto.CorreoDTO;
+import com.sendmail.response.MensajeResponse;
 import com.sendmail.service.*;
 import org.springframework.http.MediaType;
 
@@ -13,7 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @RestController
-@RequestMapping("/api/email")
+@RequestMapping("/api/v1/correo")
 public class EmailController {
 
   @Autowired
@@ -21,19 +24,17 @@ public class EmailController {
 
   private static final Logger logger = LoggerFactory.getLogger(EmailController.class);
 
-  @PostMapping(path = "/enviar")
-  public String enviarCorreo(@RequestParam String email,
-      @RequestParam String placa,
-      @RequestParam String mensaje,
-      @RequestParam Long idParqueadero) {
+  @PostMapping()
+  @ResponseStatus(HttpStatus.OK)
+  public MensajeResponse enviarCorreo(@RequestBody CorreoDTO correoDTO) {
 
     // Loguear la información del socio y la placa
-    logger.info("Socio: {}", idParqueadero);
-    if (placa != null) {
-      logger.info("Placa: {}", placa);
+    logger.info("Socio: {}", correoDTO.getIdParqueadero());
+    if (correoDTO.getPlaca() != null) {
+      logger.info("Placa: {}", correoDTO.getPlaca());
     }
-    logger.info("Mensaje: {}", mensaje);
+    logger.info("Mensaje: {}", correoDTO.getMensaje());
 
-    return "{\"mensaje\": \"Correo enviado\"}";
+    return new MensajeResponse("Correo enviado");
   }
 }
